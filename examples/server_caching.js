@@ -1,5 +1,5 @@
-const express = require('express');
-const { createClient } = require('redis');
+import express from 'express';
+import { createClient } from 'redis';
 
 const APP_PORT = 3000;
 
