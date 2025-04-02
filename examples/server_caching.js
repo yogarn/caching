@@ -15,16 +15,21 @@ async function setCache(key, expiration = 60, data) {
       EX: expiration,
     });
   } catch (err) {
-    console.error('Error setting cache:', err);
+    console.error('error setting cache:', err);
   }
 }
 
 async function getCache(key) {
   try {
     const data = await client.get(key);
-    return data ? JSON.parse(data) : null;
+
+    if (!data) {
+      return null;
+    }
+
+    return JSON.parse(data);
   } catch (err) {
-    console.error('Error getting cache:', err);
+    console.error('error getting cache:', err);
     return null;
   }
 }
