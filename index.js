@@ -2,7 +2,7 @@ import dotenv from 'dotenv/config';
 import express from 'express';
 
 import movieHandler from './handlers/movieHandler.js';
-import movieValidator from './validator/movie.js'
+import movieValidator from './validators/movie.js'
 
 const APP_PORT = process.env.APP_PORT;
 
