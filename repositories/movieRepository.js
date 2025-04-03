@@ -1,11 +1,17 @@
 import pool from "../db.js";
 
+async function simulateDelay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function getAllMovies() {
+    await simulateDelay(100);
     const result = await pool.query("SELECT * FROM movies;");
     return result.rows;
 }
 
 async function getMovieBySlug(slug) {
+    await simulateDelay(100);
     const movieResult = await pool.query(`
         SELECT * FROM movies WHERE slug = $1;
     `, [slug]);
