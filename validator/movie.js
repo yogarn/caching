@@ -1,10 +1,10 @@
 import { body } from "express-validator";
 
-const validateUpdateMovie = [
+const validateMovie = [
     body("slug").notEmpty().withMessage("Slug is required"),
     body("title").notEmpty().withMessage("Title is required"),
     body("year").isInt().withMessage("Year must be an integer"),
-    body("genre").isArray().withMessage("Genre must be an array"),
+    body("genres").notEmpty().withMessage("Genre must be an array"),
     body("director").notEmpty().withMessage("Director is required"),
     body("synopsis").notEmpty().withMessage("Synopsis is required"),
     body("rating").notEmpty().withMessage("Rating is required"),
@@ -16,5 +16,5 @@ const validateUpdateMovie = [
 ];
 
 export default {
-    validateUpdateMovie
+    validateMovie
 }

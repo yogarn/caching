@@ -10,18 +10,8 @@ CREATE TABLE movies (
     poster VARCHAR(255),
     release_date DATE,
     language VARCHAR(50),
-    country VARCHAR(50)
-);
-
-CREATE TABLE genres (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE NOT NULL
-);
-
-CREATE TABLE movie_genres (
-    movie_id INTEGER REFERENCES movies(id) ON DELETE CASCADE,
-    genre_id INTEGER REFERENCES genres(id) ON DELETE CASCADE,
-    PRIMARY KEY (movie_id, genre_id)
+    country VARCHAR(50),
+    genres VARCHAR(50)
 );
 
 CREATE TABLE reviews (

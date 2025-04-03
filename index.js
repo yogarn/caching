@@ -13,8 +13,11 @@ app.get('/', (req, res) => {
     res.json({ message: "Hello World!" });
 })
 
-app.put('/movies/:id', movieValidator.validateUpdateMovie, movieHandler.updateMovieHandler);
+app.get('/movies', movieHandler.getAllMoviesHandler);
+app.post('/movies', movieValidator.validateMovie, movieHandler.addMovieHandler);
+app.put('/movies/:id', movieValidator.validateMovie, movieHandler.updateMovieHandler);
 app.get('/movies/:slug', movieHandler.getMovieHandler);
+app.delete('/movies/:slug', movieHandler.deleteMovieHandler);
 
 app.listen(APP_PORT, () => {
     console.log(`up and running on port ${APP_PORT}`);

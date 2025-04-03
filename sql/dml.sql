@@ -1,5 +1,6 @@
+-- Optional
 -- Insert movie
-INSERT INTO movies (slug, title, year, director, synopsis, rating, duration, poster, release_date, language, country)
+INSERT INTO movies (slug, title, year, director, synopsis, rating, duration, poster, release_date, language, country, genres)
 VALUES 
 ('the-perks-of-being-a-wallflower', 
  'The Perks of Being a Wallflower', 
@@ -11,17 +12,11 @@ VALUES
  'https://www.imdb.com/images/the-perks-of-being-a-wallflower.jpg', 
  '2012-09-21', 
  'English', 
- 'USA');
+ 'USA',
+ 'Drama, Romance'
+);
 
-INSERT INTO genres (name) VALUES ('Drama'), ('Romance')
-ON CONFLICT (name) DO NOTHING;
-
-INSERT INTO movie_genres (movie_id, genre_id)
-SELECT m.id, g.id 
-FROM movies m, genres g
-WHERE m.slug = 'the-perks-of-being-a-wallflower' 
-AND g.name IN ('Drama', 'Romance');
-
+-- Reviews
 INSERT INTO reviews (username, movie_id, review)
 SELECT 'user123', m.id, 'Amazing movie, truly inspiring!'
 FROM movies m WHERE m.slug = 'the-perks-of-being-a-wallflower';
