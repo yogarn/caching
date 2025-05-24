@@ -1,35 +1,21 @@
 import repository from '../repositories/movieRepository.js';
-import cache from '../redis.js';
 
 async function getAllMovies() {
-    const cacheKey = 'all_movies';
-    
-    const cachedMovies = await cache.getCache(cacheKey);
-    if (cachedMovies) {
-        console.log('Returning cached movies data');
-        return cachedMovies;
-    }
+    // get movies data from cache
 
     const movies = await repository.getAllMovies();
-    await cache.setCache(cacheKey, 3600, movies);
+    
+    // set new cache if necessary
     
     return movies;
 }
 
 async function getMovieBySlug(slug) {
-    const cacheKey = `movie_${slug}`;
-    
-    const cachedMovie = await cache.getCache(cacheKey);
-    if (cachedMovie) {
-        console.log('Returning cached movie data');
-        return cachedMovie;
-    }
+    // get movie data from cache
 
     const movie = await repository.getMovieBySlug(slug);
 
-    if (movie) {
-        await cache.setCache(cacheKey, 3600, movie);
-    }
+    // set new cache if necessary (and if movie exist)
 
     return movie;
 }
@@ -37,7 +23,7 @@ async function getMovieBySlug(slug) {
 async function addMovie(movie) {
     const addedMovie = await repository.addMovie(movie);
     
-    await cache.setCache('all_movies', 3600, null);
+    // set new cache
 
     return addedMovie;
 }
@@ -45,8 +31,7 @@ async function addMovie(movie) {
 async function updateMovie(id, movie) {
     const updatedMovie = await repository.updateMovie(id, movie);
     
-    await cache.setCache('all_movies', 3600, null);
-    await cache.setCache(`movie_${updatedMovie.slug}`, 3600, null);
+    // set new cache
 
     return updatedMovie;
 }
@@ -54,8 +39,7 @@ async function updateMovie(id, movie) {
 async function deleteMovieBySlug(slug) {
     const deletedMovie = await repository.deleteMovieBySlug(slug);
     
-    await cache.setCache('all_movies', 3600, null);
-    await cache.setCache(`movie_${deletedMovie.slug}`, 3600, null);
+    // set new cache
 
     return deletedMovie;
 }
