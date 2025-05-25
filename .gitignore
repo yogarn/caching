@@ -6,3 +6,7 @@
 
 # specific ide conf
 .idea
+
+# compose mount
+/pgdata
+/redis-data
