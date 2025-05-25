@@ -1,0 +1,45 @@
+services:
+  imdb:
+    build: .
+    container_name: imdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./.env:/app/.env
+    networks:
+      - caching
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data:rw,z
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - caching
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - caching
+
+networks:
+  caching:
+    driver: bridge
