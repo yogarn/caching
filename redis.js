@@ -1,14 +1,10 @@
 import { createClient } from 'redis';
 
-const client = createClient({ url: process.env.REDIS_URL });
-client.on('error', (err) => console.log('Redis Client Error', err));
-client.connect();
+// connect to redis as client
 
 async function setCache(key, expiration = 60, data) {
     try {
-        await client.set(key, JSON.stringify(data), {
-            EX: expiration,
-        });
+       // set cache here
     } catch (err) {
         console.error('error setting cache:', err);
     }
@@ -16,13 +12,7 @@ async function setCache(key, expiration = 60, data) {
 
 async function getCache(key) {
     try {
-        const data = await client.get(key);
-
-        if (!data) {
-            return null;
-        }
-
-        return JSON.parse(data);
+        // return json of cached data
     } catch (err) {
         console.error('error getting cache:', err);
         return null;
