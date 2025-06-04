@@ -19,7 +19,17 @@ async function getCache(key) {
     }
 }
 
+async function delCache(key) {
+    try {
+        await client.del(key);
+    } catch (err) {
+        console.error('error deleting cache:', err);
+        return null;
+    }
+}
+
 export default {
     setCache,
-    getCache
+    getCache,
+    delCache
 }
